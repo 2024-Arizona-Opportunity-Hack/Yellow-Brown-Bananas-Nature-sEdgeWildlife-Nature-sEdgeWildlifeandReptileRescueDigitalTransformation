@@ -25,5 +25,11 @@ export const navigation = [
       url: "/login",
       onlyMobile: true,
     },
+
+    {
+      id: "5",
+      title: "Donate",
+      url: "https://givebutter.com/",
+    },
   ];
   
