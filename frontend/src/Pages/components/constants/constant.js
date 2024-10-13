@@ -7,12 +7,12 @@ export const navigation = [
     {
       id: "1",
       title: "Adoption",
-      url: "#adoption",
+      url: "/adoption",
     },
     {
       id: "2",
       title: "Animal Rescue",
-      url: "#rescue",
+      url: "/intake-rescue",
     },
     {
       id: "3",
@@ -22,7 +22,8 @@ export const navigation = [
     {
       id: "4",
       title: "Sign in",
-      url: "#login",
+      url: "/login",
       onlyMobile: true,
     },
   ];
+  

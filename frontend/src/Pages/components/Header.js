@@ -8,7 +8,6 @@ import { navigation} from "../components/constants/constant.js";
 
 import Button from "../components/Button.js"
 import MenuSvg from "../components/assets/svg/MenuSvg.js"
-// import {HamburgerMenu} from "./design/Header"
 
 
 const Header = () => {
@@ -29,7 +28,7 @@ const Header = () => {
         enablePageScroll();
         setOpenNavigation(false);
     };
-
+    
     return (
         <div className = {`fixed top-0 left-0 w-full z-50 border-b border-n-3 lg:bg-transparent/50 bg:backdrop-blur-sm" 
         ${openNavigation ? 'bg-transparent/50' : 'bg-transparent/50 backdrop-blur-sm'}`}>

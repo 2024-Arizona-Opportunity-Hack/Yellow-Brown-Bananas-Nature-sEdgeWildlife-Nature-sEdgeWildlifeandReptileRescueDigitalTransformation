@@ -26,7 +26,6 @@ const LogIn = () => {
         }
       }, [getValues, navigate]);
 
-
     return (
         <>
             <h2>Log In</h2> 
