@@ -24,6 +24,7 @@ class Database {
         return this.dbPromise;
     }
 
+    // ADOPTER
     // Insert Adopter 
     async insertAdopter({aName, aEmail, aPhone, aAddress, aAge, aJob}) {
         const db = await this.dbPromise;
@@ -34,12 +35,39 @@ class Database {
         // return true if insertion is successful. Else return false. 
         return result.changes > 0
     }
-    
+
+    // Get Adopter by ID
+    async getAdopterByID(aID) {
+        const db = await this.dbPromise;
+        const adopter = await db.get('SELECT * FROM adopters WHERE aID = ?', [aID]);
+        // return adopter object
+        return adopter;
+    }
+
     // Get ALL Adopters
     async getAllAdopters() {
         const db = await this.dbPromise;
         const adopters = await db.all('SELECT * FROM adopters');
         return adopters;
+    }
+
+    // ADOPTEE
+    // Insert Adoptee
+    async insertAdoptee({aName, aBreed, aGender, aAge}) {
+        const db = await this.dbPromise;
+        const result = await db.run(
+            'INSERT INTO adoptees (aName, aBreed, aGender, aAge, isActive) VALUES (?, ?, ?, ?, ?)', 
+            [aName, aBreed, aGender, aAge, true]
+        );
+        // return true if insertion is successful. Else return false. 
+        return result.changes > 0;
+    }
+
+    // Get Adoptee by ID
+    async getAdopteeByID(aID) {
+        const db = await this.dbPromise;
+        const adoptee = await db.get('SELECT * FROM adoptees WHERE aID = ? AND isActive = ?', [aID, true]);
+        return adoptee; 
     }
 
     // Get ALL Adoptees
@@ -49,49 +77,48 @@ class Database {
         return adoptees;
     }
 
-    // Get Adopter by ID
-    async getAdopterByID(aID) {
-        const db = await this.dbPromise;
-        const adopter = await db.get('SELECT * FROM adopters WHERE aID = ?', [aID]);
-        // return adopter object
-        return adopter;
-    }   
-
-    // Insert Adoptee
-    async insertAdoptee({aName, aBreed, aGender, aAge}) {
+    // Soft delete: Set isActive = 0 for the adoptee with the given ID
+    async deleteAdoptee(anID) {
         const db = await this.dbPromise;
         const result = await db.run(
-            'INSERT INTO adopters (aName, aBreed, aGender, aAge) VALUES (?, ?, ?, ?)', 
-            [aName, aBreed, aGender, aAge]
+            'UPDATE adoptees SET isActive = 0 WHERE aID = ?', 
+            [anID]
         );
-        // return true if insertion is successful. Else return false. 
-        return result.changes > 0
+        return result.changes > 0;
     }
 
+    // RESCUED ANIMAL
     // Get All Rescued Animals
     async getAllRescuedAnimals() {
         const db = await this.dbPromise;
-        const allRescuedAnimals = await db.all('SELECT * FROM rescuedAnimals and isActive = 1');
-        // return adopter object
+        const allRescuedAnimals = await db.all('SELECT * FROM rescuedAnimals WHERE isActive = 1');
         return allRescuedAnimals;
     }   
 
-      // Get Adoptee by ID
-    async getAllRescuedAnimalsID(aID) {
+    // Get Rescued Animal by ID
+    async getRescuedAnimalsByID(aID) {
         const db = await this.dbPromise;
-        const aRescuedAnimals = await db.get('SELECT * FROM rescuedAnimals WHERE aID = ? and isActive = 1', [aID]);
-        // return adopter object
-        return aRescuedAnimals;
-    }   
+        const aRescuedAnimal = await db.get('SELECT * FROM rescuedAnimals WHERE aID = ? and isActive = ?', [aID, true]);
+        return aRescuedAnimal;
+    }
 
-  // Soft delete: Set isActive = 0 for the rescued animal with the given ID
-    async deleteRescuedAnimal(anID) {
+    // Insert Rescued Animal
+    async insertRescuedAnimal({aName, aBreed, aGender, aAge, aRescuer, aDateRescued}) {
         const db = await this.dbPromise;
         const result = await db.run(
-            'UPDATE adoptees SET isActive = 0 WHERE anID = ?', 
-            [anID]
+            'INSERT INTO rescuedAnimals (aName, aBreed, aGender, aAge, aRescuer, aDateRescued, isActive) VALUES (?, ?, ?, ?, ?, ?, ?)', 
+            [aName, aBreed, aGender, aAge, aRescuer, aDateRescued, true]
         );
-        // Return true if the update affected any rows, otherwise false
+        return result.changes > 0;
+    }
+
+    // Soft delete: Set isActive = 0 for the rescued animal with the given ID
+    async deleteRescuedAnimal(aID) {
+        const db = await this.dbPromise;
+        const result = await db.run(
+            'UPDATE rescuedAnimals SET isActive = 0 WHERE aID = ?', 
+            [aID]
+        );
         return result.changes > 0;
     }
 
@@ -101,7 +128,6 @@ class Database {
         const species = await db.all('SELECT * FROM species');
         return species;
     }
-
 }
 
 module.exports = new Database();

@@ -38,8 +38,6 @@ app.post('/register', async (req, res) => {
     }
 });
 
-
-
 // Set up function
 async function setup() {
     try {

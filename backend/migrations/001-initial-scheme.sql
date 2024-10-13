@@ -38,12 +38,12 @@ CREATE TABLE adopters (
     aEmail TEXT NOT NULL,
     aPhone TEXT NOT NULL,
     aAddress TEXT NOT NULL,
-    aAGE TEXT NOT NULL,
+    aAge TEXT NOT NULL,
     aJob TEXT NOT NULL,
 );
 
 CREATE TABLE adoptees (
-    anID INTEGER PRIMARY KEY, -- This ID will link to Species ID
+    aID INTEGER PRIMARY KEY,
     aName TEXT NOT NULL,
     aBreed TEXT NOT NULL, 
     aGender TEXT NOT NULL, 
@@ -59,10 +59,9 @@ CREATE TABLE users (
 
 -- Down
 DROP TABLE species;
-DROP TABLE breeds;
 DROP TABLE rescuers;
 DROP TABLE rescuedAnimals;
 DROP TABLE medias;
-DROP TABLE adopter;
-DROP TABLE adoptee;
+DROP TABLE adopters;
+DROP TABLE adoptees;
 DROP TABLE users;
