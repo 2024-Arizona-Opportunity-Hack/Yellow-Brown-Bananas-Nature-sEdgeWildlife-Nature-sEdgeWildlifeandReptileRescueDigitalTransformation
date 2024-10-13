@@ -112,58 +112,66 @@ const Search = () => {
     }
   }, [category]);
 
-  const handleNameClick = (id) => {
-    navigate(`/search/${id}`);
-  };
+    const handleNameClick = (id) => {
+        if (id) {
+        const formattedCategory = category.replace(/\s+/g, '-').toLowerCase(); 
+        const url = `/search/${formattedCategory}/${id}`;
+    
+        console.log('Navigating to:', url); 
+        navigate(url); 
+        } else {
+        console.error('ID is undefined');
+        }
+    };
+  
+    return (
+        <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100">
+        <h1 className="text-3xl font-bold mb-6">React Table Example</h1>
 
-  return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100">
-      <h1 className="text-3xl font-bold mb-6">React Table Example</h1>
-
-      {/* Category buttons */}
-      <div className="mb-4 w-full flex justify-center">
-        <div className="flex bg-transparent backdrop-blur-md border border-gray-300 rounded-full p-2">
-          <button
-            onClick={() => setCategory('Intake response')}
-            className={`px-4 py-2 ${category === 'Intake response' ? 'bg-blue-500 text-white' : 'bg-transparent text-black'} rounded-full`}
-          >
-            Intake Response
-          </button>
-          <button
-            onClick={() => setCategory('Adopt response')}
-            className={`px-4 py-2 ml-1 ${category === 'Adopt response' ? 'bg-blue-500 text-white' : 'bg-transparent text-black'} rounded-full`}
-          >
-            Adopt Response
-          </button>
-          <button
-            onClick={() => setCategory('Rescued animal')}
-            className={`px-4 py-2 ml-1 ${category === 'Rescued animal' ? 'bg-blue-500 text-white' : 'bg-transparent text-black'} rounded-full`}
-          >
-            Rescued Animal
-          </button>
-          <button
-            onClick={() => setCategory('Ready for adopt')}
-            className={`px-4 py-2 ml-1 ${category === 'Ready for adopt' ? 'bg-blue-500 text-white' : 'bg-transparent text-black'} rounded-full`}
-          >
-            Ready for Adopt
-          </button>
+        {/* Category buttons */}
+        <div className="mb-4 w-full flex justify-center">
+            <div className="flex bg-transparent backdrop-blur-md border border-gray-300 rounded-full p-2">
+            <button
+                onClick={() => setCategory('Intake response')}
+                className={`px-4 py-2 ${category === 'Intake response' ? 'bg-blue-500 text-white' : 'bg-transparent text-black'} rounded-full`}
+            >
+                Intake Response
+            </button>
+            <button
+                onClick={() => setCategory('Adopt response')}
+                className={`px-4 py-2 ml-1 ${category === 'Adopt response' ? 'bg-blue-500 text-white' : 'bg-transparent text-black'} rounded-full`}
+            >
+                Adopt Response
+            </button>
+            <button
+                onClick={() => setCategory('Rescued animal')}
+                className={`px-4 py-2 ml-1 ${category === 'Rescued animal' ? 'bg-blue-500 text-white' : 'bg-transparent text-black'} rounded-full`}
+            >
+                Rescued Animal
+            </button>
+            <button
+                onClick={() => setCategory('Ready for adopt')}
+                className={`px-4 py-2 ml-1 ${category === 'Ready for adopt' ? 'bg-blue-500 text-white' : 'bg-transparent text-black'} rounded-full`}
+            >
+                Ready for Adopt
+            </button>
+            </div>
         </div>
-      </div>
 
-      {/* Table section */}
-      <div className="w-full max-w-4xl bg-white shadow-md rounded-lg p-4">
-        {loading ? (
-          <div>Loading...</div>
-        ) : error ? (
-          <div className="text-red-500">{error}</div>
-        ) : data.length === 0 ? (
-          <div>No data available.</div>
-        ) : (
-          <Table columns={columns} data={data} />
-        )}
-      </div>
-    </div>
-  );
-};
+        {/* Table section */}
+        <div className="w-full max-w-4xl bg-white shadow-md rounded-lg p-4">
+            {loading ? (
+            <div>Loading...</div>
+            ) : error ? (
+            <div className="text-red-500">{error}</div>
+            ) : data.length === 0 ? (
+            <div>No data available.</div>
+            ) : (
+            <Table columns={columns} data={data} />
+            )}
+        </div>
+        </div>
+    );
+    };
 
-export default Search;
+    export default Search;
