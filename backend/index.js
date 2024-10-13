@@ -96,10 +96,16 @@ app.post('/adoption-response', async (req, res) => {
     }
 });
 
+// GET request to /adoption-response
+app.get('/adoption-response', async (req, res) => {
+    const adoptionResponses = await databaseService.getAllAdopters();
+    res.json(adoptionResponses);
+});
+
 // GET request to /adoptees
-app.get('/adoptee', async (req, res) => {
+app.get('/adoptees', async (req, res) => {
     const adoptees = await databaseService.getAllAdoptees();
-    res.json(adoptees)
+    res.json(adoptees);
 });
 
 // GET request to /species

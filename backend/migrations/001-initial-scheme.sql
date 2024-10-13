@@ -48,7 +48,8 @@ CREATE TABLE adoptees (
     ID INTEGER PRIMARY KEY,
     speciesID INTEGER,
     breed TEXT NOT NULL, 
-    gender TEXT NOT NULL, 
+    gender TEXT NOT NULL,
+    colorization TEXT NOT NULL,
     age INTEGER,
     isActive BOOLEAN NOT NULL,
     FOREIGN KEY (speciesID) REFERENCES species(sID)

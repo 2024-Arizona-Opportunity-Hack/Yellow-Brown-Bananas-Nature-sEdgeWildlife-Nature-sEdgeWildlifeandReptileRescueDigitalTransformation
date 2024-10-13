@@ -2,11 +2,13 @@ import React, { useMemo, useState, useEffect } from 'react';
 import Table from './components/Table';
 import { useNavigate } from 'react-router-dom';
 import APIService from '../services/APIService.js'; // Ensure this service is properly defined
+import { set } from 'react-hook-form';
 
 const Search = () => {
   const [data, setData] = useState([]);
   const [category, setCategory] = useState('Intake response'); // Default category
   const [loading, setLoading] = useState(false); // Loading state
+  const [refresh, setRefresh] = useState(false);
   const [error, setError] = useState(null); // Error state
   const navigate = useNavigate();
 
@@ -17,19 +19,11 @@ const Search = () => {
       let newData = [];
         try {
             if (category === 'Intake response') {
-            newData = setData(await APIService.getIntakeResponse()); // Fetch data for Intake Response
+                newData = setData(await APIService.getIntakeResponse()); // Fetch data for Intake Response
             } else if (category === 'Adopt response') {
-            newData = [
-                { id: 4, name: 'Alice', age: 25, city: 'San Francisco' },
-                { id: 5, name: 'Bob', age: 30, city: 'Boston' },
-                { id: 6, name: 'Charlie', age: 35, city: 'Seattle' },
-            ];
+                newData = setData(await APIService.getAdoptResponse());
             } else if (category === 'Ready for adopt') {
-            newData = [
-                { id: 10, name: 'Gina', age: 26, city: 'Denver' },
-                { id: 11, name: 'Henry', age: 29, city: 'Austin' },
-                { id: 12, name: 'Isabel', age: 31, city: 'Phoenix' },
-            ];
+                newData = setData(await APIService.getReadyForAdopt()); // Fetch data for Ready for Adopt
             }
 
         } catch (err) {
@@ -41,18 +35,18 @@ const Search = () => {
     
 
     fetchData();
-  }, [category]); // Re-fetch data when the category changes
+  }, [category, refresh]); // Re-fetch data when the category changes or if need to refresh
 
   // Memoize the columns, based on the current category
   const columns = useMemo(() => {
-    if (category === 'Adopt response' || category === 'Ready for adopt') {
+    if (category === 'Adopt response') {
       return [
         {
           Header: 'Name',
           accessor: 'name',
           Cell: ({ row }) => (
             <span
-              onClick={() => handleNameClick(row.original.id)}
+              onClick={() => handleNameClick(row.original.ID)}
               style={{ cursor: 'pointer', color: 'blue', textDecoration: 'underline' }}
             >
               {row.original.name}
@@ -64,8 +58,20 @@ const Search = () => {
           accessor: 'age',
         },
         {
-          Header: 'City',
-          accessor: 'city',
+          Header: 'Email',
+          accessor: 'email',
+        },
+        {
+            Header: 'Job',
+            accessor: 'job',
+        },
+        {
+            Header: 'Address',
+            accessor: 'address',
+        },
+        {
+            Header: 'Species reference',
+            accessor: 'species',
         },
       ];
     } else if (category === 'Intake response') {
@@ -114,7 +120,7 @@ const Search = () => {
                 <div className="flex justify-center items-center">
                 <input
                   type="checkbox"
-                  defaultChecked={row.original.isActive === 1} // Check if the animal is marked as ready for adoption
+                  defaultChecked={row.original.isActive === 0} // Check if the animal is marked as ready for adoption
                   onChange={(e) => {
                     const isChecked = e.target.checked;
                     const confirmAction = window.confirm(
@@ -133,6 +139,34 @@ const Search = () => {
           },
      
       ];
+    } else if (category === 'Ready for adopt') {
+        return [
+            {
+                Header: 'Species',
+                accessor: 'species',
+                Cell: ({ row }) => (
+                    <span
+                      onClick={() => handleNameClick(row.original.ID)}
+                      style={{ cursor: 'pointer', color: 'blue', textDecoration: 'underline' }}
+                    >
+                      {row.original.species}
+                    </span>
+                ),
+            },
+            {
+              Header: 'Breed',
+              accessor: 'breed',
+              
+            },
+            {
+              Header: 'Colorization',
+              accessor: 'colorization',
+            },
+            {
+              Header: 'Gender',
+              accessor: 'gender',
+            }
+        ];
     }
   }, [category]);
 
@@ -148,15 +182,14 @@ const Search = () => {
         }
     };
 
-    const handleCheckboxChange = (id, checked) => {
+    const handleCheckboxChange = async (id, checked) => {
         if (checked) {
-          console.log(`Animal with ID ${id} is ready for adoption.`);
-        } else {
-          console.log(`Animal with ID ${id} is NOT ready for adoption.`);
+            try { await APIService.animalReadyForAdoption(id); }
+            catch (error) {}
+            setRefresh(!refresh);
         }
     };
     
-  
     return (
         <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100">
       <h1 className="text-3xl font-bold mb-6">Database Search</h1>

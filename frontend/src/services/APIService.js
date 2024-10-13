@@ -73,11 +73,44 @@ const updateIntake = async (intakeData) => {
     }
 };
 
+const animalReadyForAdoption = async (ID) => {
+    try {
+        const response = await axios.delete(`${API_URL}/rescued-animals/${ID}`);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching intake detail:', error);
+        throw error;
+    }
+}
+
+const getReadyForAdopt = async () => {
+    try {
+        const response = await axios.get(`${API_URL}/adoptees`);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching intake detail:', error);
+        throw error;
+    }
+}
+
+const getAdoptResponse = async () => {
+    try {
+        const response = await axios.get(`${API_URL}/adoption-response`);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching adoption responses:', error);
+        throw error;
+    }
+};
+
 export default {
     getSpecies,
     addIntakeResponse,
     getIntakeResponse,
     addAdoptionResponse,
     getIntakeDetail,
-    updateIntake
+    updateIntake,
+    animalReadyForAdoption,
+    getReadyForAdopt,
+    getAdoptResponse
 };

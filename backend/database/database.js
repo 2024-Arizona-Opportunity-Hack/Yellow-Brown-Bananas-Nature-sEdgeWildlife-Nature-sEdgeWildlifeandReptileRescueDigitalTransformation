@@ -66,17 +66,17 @@ class Database {
     // Get ALL Adopters
     async getAllAdopters() {
         const db = await this.dbPromise;
-        const adopters = await db.all('SELECT * FROM adopters');
+        const adopters = await db.all('SELECT *, s.sType AS species FROM adopters LEFT JOIN species s ON adopters.speciesID = s.sId');
         return adopters;
     }
 
     // ADOPTEE
     // Insert Adoptee
-    async insertAdoptee({speciesID, breed, gender, age}) {
+    async insertAdoptee({speciesID, breed, gender, age, colorization}) {
         const db = await this.dbPromise;
         const result = await db.run(
-            'INSERT INTO adoptees (speciesID, breed, gender, age, isActive) VALUES (?, ?, ?, ?, ?)', 
-            [speciesID, breed, gender, age, true]
+            'INSERT INTO adoptees (speciesID, breed, gender, age, colorization, isActive) VALUES (?, ?, ?, ?, ?, ?)', 
+            [speciesID, breed, gender, age, colorization, true]
         );
         // return true if insertion is successful. Else return false. 
         return result.lastID || null;
@@ -92,7 +92,7 @@ class Database {
     // Get ALL Adoptees
     async getAllAdoptees() {
         const db = await this.dbPromise;
-        const adoptees = await db.all('SELECT * FROM adoptees WHERE isActive = 1');
+        const adoptees = await db.all('SELECT *, s.sType as species FROM adoptees a LEFT JOIN species s ON a.speciesID = s.sId WHERE isActive = 1');
         return adoptees;
     }
 

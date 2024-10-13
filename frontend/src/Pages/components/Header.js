@@ -35,7 +35,7 @@ const Header = () => {
     const handleLogout = () => {
         AuthService.logout();
         setIsAuthenticated(false); 
-        navigate('/');
+        navigate('/');  
     };
 
     return (
