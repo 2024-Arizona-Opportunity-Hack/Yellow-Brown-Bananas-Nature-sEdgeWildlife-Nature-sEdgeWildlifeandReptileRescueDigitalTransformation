@@ -36,7 +36,7 @@ CREATE TABLE media (
 
 -- ADOPTION FORM -----------------------------------------------------------------------------------------------------
 CREATE TABLE animal (
-    sAnimalID INTEGER PRIMARY KEY,
+    sAnimalID INTEGER PRIMARY KEY, -- This ID will link to Species ID
     aName TEXT NOT NULL,  
     breed TEXT NOT NULL, 
     gender TEXT NOT NULL, 
@@ -72,14 +72,11 @@ CREATE TABLE prevAdoptions (
     pID INTEGER PRIMARY KEY,
     prevAdopt TEXT NOT NULL  
 );
-
--- species is already declared in INTAKE area
-
 -- ADOPTION FORM -----------------------------------------------------------------------------------------------------
 
 
 -- User --------------------------------------------------------------------------------------------------------------
-
+-- Thinh said he will do this section
 -- User --------------------------------------------------------------------------------------------------------------
 
 
@@ -90,6 +87,14 @@ DROP TABLE gender;
 DROP TABLE coloration;
 DROP TABLE injury;
 DROP TABLE media;
+DROP TABLE animal;
+DROP TABLE email;
+DROP TABLE phone;
+DROP TABLE address;
+DROP TABLE age;
+DROP TABLE job;
+DROP TABLE prevAdoptions;
+
 
 
 
