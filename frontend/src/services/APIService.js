@@ -52,9 +52,32 @@ const addAdoptionResponse = async (adoptionResponseObj) => {
     }
 }
 
+const getIntakeDetail = async (ID) => {  // Add the arrow function syntax
+    try {
+        const response = await axios.get(`${API_URL}/intake-response/${ID}`);  // Interpolate the ID into the URL
+        // console.log(response.data);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching intake detail:', error);
+        throw error;
+    }
+};
+
+const updateIntake = async (intakeData) => {
+    try {
+      const response = await axios.put(`${API_URL}/intake-response/${intakeData.ID}`, intakeData);
+      return response.data;
+    } catch (error) {
+      console.error('Error updating intake data:', error);
+      throw error;
+    }
+};
+
 export default {
     getSpecies,
     addIntakeResponse,
     getIntakeResponse,
-    addAdoptionResponse
+    addAdoptionResponse,
+    getIntakeDetail,
+    updateIntake
 };

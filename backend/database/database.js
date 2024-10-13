@@ -115,11 +115,19 @@ class Database {
     }   
 
     // Get Rescued Animal by ID
-    async getRescuedAnimalsByID(ID) {
-        const db = await this.dbPromise;
-        const aRescuedAnimal = await db.get('SELECT * FROM rescuedAnimals WHERE ID = ? AND isActive = ?', [ID, true]);
-        return aRescuedAnimal;
-    }
+async getRescuedAnimalsByID(ID) {
+    const db = await this.dbPromise;
+    const query = `
+        SELECT ra.*, s.sType AS species, r.rPhoneNumber AS rescuerPhoneNumber, r.rName AS rescuerName
+        FROM rescuedAnimals ra
+        LEFT JOIN species s ON ra.speciesID = s.sId
+        LEFT JOIN rescuers r ON ra.rescuerID = r.rID
+        WHERE ra.ID = ? AND ra.isActive = ?
+    `;
+    const aRescuedAnimal = await db.get(query, [ID, true]);
+    return aRescuedAnimal;
+}
+
 
     // Insert Rescued Animal
     async insertRescuedAnimal({ breed, gender, colorization, injury, rescuerID, speciesID}) {
@@ -164,14 +172,15 @@ class Database {
     async getIntakeResponses() {
         const db = await this.dbPromise;
         const query = `
-            SELECT ra.*, r.rName AS rescuerName, r.rPhoneNumber AS rescuerPhoneNumber
+            SELECT ra.*, r.rName AS rescuerName, r.rPhoneNumber AS rescuerPhoneNumber, s.sType AS species
             FROM rescuedAnimals ra
             JOIN rescuers r ON ra.rescuerID = r.rID
+            JOIN species s ON ra.speciesID = s.sId
             WHERE ra.isActive = 1
         `;
         const rescuedAnimals = await db.all(query);
         return rescuedAnimals;
-    }
+    }    
 }
 
 module.exports = new Database();
