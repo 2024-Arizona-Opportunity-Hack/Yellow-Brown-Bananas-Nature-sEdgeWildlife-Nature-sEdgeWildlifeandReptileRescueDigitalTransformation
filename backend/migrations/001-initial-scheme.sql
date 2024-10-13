@@ -5,19 +5,19 @@ CREATE TABLE species (
     sType TEXT NOT NULL  
 );
 
-CREATE TABLE breed (
+CREATE TABLE breeds (
     bID INTEGER PRIMARY KEY,
     bType TEXT NOT NULL,
     speciesID INTEGER
 );
 
-CREATE TABLE rescuer (
+CREATE TABLE rescuers (
     rID INTEGER PRIMARY KEY,
     rName TEXT NOT NULL,
     rPhoneNumber INTEGER
 );
 
-CREATE TABLE animalInfo (
+CREATE TABLE animalInfos (
     aID INTEGER PRIMARY KEY,
     gender TEXT NOT NULL,
     aSpeciesID INTEGER,
@@ -26,7 +26,7 @@ CREATE TABLE animalInfo (
     injury TEXT NOT NULL
 );
 
-CREATE TABLE media (
+CREATE TABLE medias (
     mediaID INTEGER PRIMARY KEY,   -- Unique identifier for each media entry
     mediaType TEXT NOT NULL,       -- Type of media (e.g., 'photo', 'video')
     mediaURL TEXT NOT NULL,        -- URL or path to the media file
@@ -44,11 +44,9 @@ CREATE TABLE adopter (
     aAddress TEXT NOT NULL,
     aAGE TEXT NOT NULL,
     aJob TEXT NOT NULL,
-    aPrevAdoptees TEXT NOT NULL
 );
 
-
-CREATE TABLE animal (
+CREATE TABLE adoptee (
     anID INTEGER PRIMARY KEY, -- This ID will link to Species ID
     aName TEXT NOT NULL,
     aBreed TEXT NOT NULL, 
@@ -68,10 +66,11 @@ CREATE TABLE users (
 -- Down
 DROP TABLE species;
 DROP TABLE breed;
+DROP TABLE rescuers;
 DROP TABLE animalInfo;
 DROP TABLE media;
 DROP TABLE adopter;
-DROP TABLE animal;
+DROP TABLE adoptee;
 DROP TABLE users;
 
 
