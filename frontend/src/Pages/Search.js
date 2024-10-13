@@ -24,11 +24,6 @@ const Search = () => {
                 { id: 5, name: 'Bob', age: 30, city: 'Boston' },
                 { id: 6, name: 'Charlie', age: 35, city: 'Seattle' },
             ];
-            } else if (category === 'Rescued animal') {
-            newData = [
-                { id: 7, breed: 'Dog', colorization: 'Brown', gender: 'Female', injury: 'None', isActive: 1, rescuerID: 1, rescuerName: 'John', rescuerPhoneNumber: 1234567890, speciesID: 2 },
-                { id: 8, breed: 'Cat', colorization: 'Black', gender: 'Male', injury: 'Broken Leg', isActive: 1, rescuerID: 2, rescuerName: 'Jane', rescuerPhoneNumber: 9876543210, speciesID: 3 },
-            ];
             } else if (category === 'Ready for adopt') {
             newData = [
                 { id: 10, name: 'Gina', age: 26, city: 'Denver' },
@@ -50,7 +45,7 @@ const Search = () => {
 
   // Memoize the columns, based on the current category
   const columns = useMemo(() => {
-    if (category === 'Rescued animal' || category === 'Adopt response' || category === 'Ready for adopt') {
+    if (category === 'Adopt response' || category === 'Ready for adopt') {
       return [
         {
           Header: 'Name',
@@ -76,16 +71,21 @@ const Search = () => {
     } else if (category === 'Intake response') {
       return [
         {
+            Header: 'Species',
+            accessor: 'species',
+            Cell: ({ row }) => (
+                <span
+                  onClick={() => handleNameClick(row.original.ID)}
+                  style={{ cursor: 'pointer', color: 'blue', textDecoration: 'underline' }}
+                >
+                  {row.original.species}
+                </span>
+            ),
+        },
+        {
           Header: 'Breed',
           accessor: 'breed',
-          Cell: ({ row }) => (
-            <span
-              onClick={() => handleNameClick(row.original.ID)}
-              style={{ cursor: 'pointer', color: 'blue', textDecoration: 'underline' }}
-            >
-              {row.original.breed}
-            </span>
-          ),
+          
         },
         {
           Header: 'Colorization',
@@ -107,6 +107,30 @@ const Search = () => {
           Header: 'Rescuer Phone Number',
           accessor: 'rescuerPhoneNumber',
         },
+        {
+            Header: 'Ready for Adoption', // New column for the checkbox
+            accessor: 'isActive',
+            Cell: ({ row }) => (
+                <div className="flex justify-center items-center">
+                <input
+                  type="checkbox"
+                  defaultChecked={row.original.isActive === 1} // Check if the animal is marked as ready for adoption
+                  onChange={(e) => {
+                    const isChecked = e.target.checked;
+                    const confirmAction = window.confirm(
+                      `Are you sure you want to ${isChecked ? 'mark' : 'unmark'} this animal as ready for adoption?`
+                    );
+                    if (confirmAction) {
+                      handleCheckboxChange(row.original.ID, isChecked); // Pop the ID and handle the change
+                      alert(`Animal ID: ${row.original.ID} has been ${isChecked ? 'marked' : 'unmarked'} as ready for adoption.`);
+                    } else {
+                      e.target.checked = !isChecked; // Revert the checkbox if the action is not confirmed
+                    }
+                  }}
+                />
+              </div>
+            ),
+          },
      
       ];
     }
@@ -123,10 +147,19 @@ const Search = () => {
         console.error('ID is undefined');
         }
     };
+
+    const handleCheckboxChange = (id, checked) => {
+        if (checked) {
+          console.log(`Animal with ID ${id} is ready for adoption.`);
+        } else {
+          console.log(`Animal with ID ${id} is NOT ready for adoption.`);
+        }
+    };
+    
   
     return (
         <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100">
-        <h1 className="text-3xl font-bold mb-6">React Table Example</h1>
+      <h1 className="text-3xl font-bold mb-6">Database Search</h1>
 
         {/* Category buttons */}
         <div className="mb-4 w-full flex justify-center">
@@ -142,12 +175,6 @@ const Search = () => {
                 className={`px-4 py-2 ml-1 ${category === 'Adopt response' ? 'bg-blue-500 text-white' : 'bg-transparent text-black'} rounded-full`}
             >
                 Adopt Response
-            </button>
-            <button
-                onClick={() => setCategory('Rescued animal')}
-                className={`px-4 py-2 ml-1 ${category === 'Rescued animal' ? 'bg-blue-500 text-white' : 'bg-transparent text-black'} rounded-full`}
-            >
-                Rescued Animal
             </button>
             <button
                 onClick={() => setCategory('Ready for adopt')}
@@ -171,7 +198,7 @@ const Search = () => {
             )}
         </div>
         </div>
-    );
-    };
+  );
+};
 
     export default Search;

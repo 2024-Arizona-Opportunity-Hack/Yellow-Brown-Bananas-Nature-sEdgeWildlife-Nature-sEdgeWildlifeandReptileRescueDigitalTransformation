@@ -11,6 +11,7 @@ import AuthService from './services/AuthService.js';
 import LandingPage from './pages/LandingPage.js';
 import Navbar from './pages/components/Header.js';
 import AdoptionForm from './pages/AdoptionForm.js';
+import IntakeDetail from './pages/IntakeDetail.js'
 
 function PrivateRoute({ element }) {
   const [isAuthenticated, setIsAuthenticated] = useState(null); // Start as null to indicate loading state
@@ -41,6 +42,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/search" element={<PrivateRoute element={<Search />} />} />
+        <Route path="/search/intake-response/:id" element={<PrivateRoute element={<IntakeDetail />} />} />
         <Route path="/login" element={<LogIn />} />
         <Route path="/register" element={<Register />} />
         <Route path="/intake-form" element={<IntakeForm />} />

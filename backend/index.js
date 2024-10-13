@@ -65,7 +65,7 @@ app.get('/intake-response/:id', async (req, res) => {
     res.json(intakeResponse);
 });
 
-// POST request to /adoption-response
+// POST request to /adoption-responsea
 app.post('/adoption-response', async (req, res) => {
     try {
         const { address, age, email, job, name, phone, speciesID } = req.body;
