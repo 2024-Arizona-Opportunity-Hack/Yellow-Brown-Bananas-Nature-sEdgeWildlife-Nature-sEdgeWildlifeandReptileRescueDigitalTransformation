@@ -3,12 +3,13 @@ import React from "react";
 import { useEffect, useState } from 'react';
 import { Route, Routes, Navigate } from "react-router-dom";
 
-import Home from "./pages/Home.js";
 import IntakeForm from "./pages/IntakeForm.js";
 import Search from "./pages/Search.js";
 import LogIn from './pages/LogIn.js';
 import Register from './pages/Register.js';
 import AuthService from './services/AuthService.js';
+import LandingPage from './pages/LandingPage.js';
+import Navbar from './pages/components/Header.js';
 
 function PrivateRoute({ element }) {
   const [isAuthenticated, setIsAuthenticated] = useState(null); // Start as null to indicate loading state
@@ -35,11 +36,9 @@ function PrivateRoute({ element }) {
 function App() {
   return (
     <>
+      <Navbar/>
       <Routes>
-        <Route path="/" element={<Home />} />
-
-        <Route path="/test" element={<IntakeForm />} />
-
+        <Route path="/" element={<LandingPage />} />
         <Route path="/search" element={<PrivateRoute element={<Search />} />} />
         <Route path="/login" element={<LogIn />} />
         <Route path="/register" element={<Register />} />
