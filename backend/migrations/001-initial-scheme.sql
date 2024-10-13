@@ -11,6 +11,12 @@ CREATE TABLE breed (
     speciesID INTEGER
 );
 
+CREATE TABLE rescuer (
+    rID INTEGER PRIMARY KEY,
+    rName TEXT NOT NULL,
+    rPhoneNumber INTEGER
+);
+
 CREATE TABLE animalInfo (
     aID INTEGER PRIMARY KEY,
     gender TEXT NOT NULL,
