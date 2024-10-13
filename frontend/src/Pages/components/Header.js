@@ -4,10 +4,10 @@ import {disablePageScroll, enablePageScroll} from 'scroll-lock';
 
 
 import logo from "../components/assets/image/NEWRR_Logo.png";
-import { navigation} from "../components/constants/constant.js";
+import { navigation} from "./constants/constant.js";
 
-import Button from "../components/Button.js"
-import MenuSvg from "../components/assets/svg/MenuSvg.js"
+import Button from "./Button.js"
+import MenuSvg from "./assets/svg/MenuSvg.js"
 
 
 const Header = () => {
@@ -52,14 +52,12 @@ const Header = () => {
                                 {item.title}
                             </a>
                         ))}
-
-                        
                     </div>
                     
                 </nav>
 
                 <Button className="hidden lg:flex" href ='login'>
-                    Sign in
+                    SIGN IN
                 </Button>
 
                 <Button className="ml-auto lg:hidden" px ='px-3' onClick={toggleNavigation}>

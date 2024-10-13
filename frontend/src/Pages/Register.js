@@ -28,34 +28,62 @@ const Register = () => {
 
 
     return (
-        <>
-            <h2>Register</h2> 
-            <form onSubmit={handleSubmit(onSubmit)}> 
+        <div className="d-flex min-vh-100 justify-content-center align-items-center bg-light flex-column">
+  
+            <h2 className="text-center mb-4">Register</h2>
+        
+            <div className="w-100 p-5" style={{ 
+                maxWidth: '600px',
+                padding: '20px',
+                borderRadius: '30px',
+                position: 'relative',
+                boxShadow: '0 0 20px rgba(0, 0, 0, 0.2)', /* Box shadow for depth */
+            }}>
+        
+            <div style={{
+                borderRadius: 'inherit', 
+                backgroundColor: 'white',
+                padding: '30px',
+                filter: 'blur(0)', /* Keep content sharp */
+            }}>
             
-            {/* Username field */}
-            <label htmlFor="username">Username</label> 
-            <div> 
-                <input 
-                placeholder="Username" 
-                {...register("username", { required: "This field is required." })} 
-                /> 
-            </div> 
-            <div className="error-message">{errors.username?.message}</div> 
-
-            {/* Password field */}
-            <label htmlFor="password">Password</label> 
-            <div> 
-                <input 
-                type="password"
-                placeholder="Password" 
-                {...register("password", { required: "This field is required." })} 
-                /> 
-            </div> 
-            <div className="error-message">{errors.password?.message}</div>
-
-            <SubmitButton />
-            </form>
-        </>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                
+                <div className="form-group mb-4">
+                    <label htmlFor="username" className="form-label" style={{ marginBottom: '8px', fontWeight: '500' }}>Username</label>
+                    <input 
+                    type="text" 
+                    className="form-control form-control-lg" 
+                    id="username" 
+                    placeholder="Enter username" 
+                    style={{ padding: '12px' }}
+                    {...register("username", { required: "This field is required." })} 
+                    />
+                    <div className="text-danger mt-2">{errors.username?.message}</div>
+                </div>
+        
+                <div className="form-group mb-4">
+                    <label htmlFor="password" className="form-label" style={{ marginBottom: '8px', fontWeight: '500' }}>Password</label>
+                    <input 
+                    type="password" 
+                    className="form-control form-control-lg" 
+                    id="password" 
+                    placeholder="Enter password" 
+                    style={{ padding: '12px' }}
+                    {...register("password", { required: "This field is required." })} 
+                    />
+                    <div className="text-danger mt-2">{errors.password?.message}</div>
+                </div>
+        
+                <div className="d-grid">
+                    <SubmitButton className="btn btn-primary btn-lg py-2 shadow-sm" />
+                </div>
+                </form>
+            
+            </div>
+            </div>
+      </div>
+      
     );
 }
 

@@ -1,6 +1,6 @@
 import React from "react";
 import Hero from "./components/Intro.js";
-import Navbar from './components/Header.js';
+// import Navbar from './components/Header.js';
 
 function LandingPage() {
   return (

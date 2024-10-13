@@ -1,4 +1,4 @@
-import ButtonSvg from "../components/assets/svg/ButtonSvg"
+import ButtonSvg from "./assets/svg/ButtonSvg"
 
 const Button = ({ className, href, onClick, children, px, white}) => {
 
