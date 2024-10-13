@@ -7,12 +7,12 @@
   {
     id: "1",
     title: "Adoption",
-    url: "/adoption",
+    url: "/adoption-form",
   },
   {
     id: "2",
     title: "Animal Rescue",
-    url: "/intake-rescue",
+    url: "/intake-form",
   },
   {
     id: "3",
