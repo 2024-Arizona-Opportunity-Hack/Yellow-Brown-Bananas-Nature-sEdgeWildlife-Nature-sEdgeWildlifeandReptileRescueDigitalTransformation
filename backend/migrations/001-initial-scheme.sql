@@ -2,13 +2,7 @@
 -- INTAKE FORM -------------------------------------------------------------------------------------------------------
 CREATE TABLE species (
     sID INTEGER PRIMARY KEY,
-    sType TEXT NOT NULL  
-);
-
-CREATE TABLE breeds (
-    bID INTEGER PRIMARY KEY,
-    bType TEXT NOT NULL,
-    speciesID INTEGER
+    sType TEXT NOT NULL UNIQUE
 );
 
 CREATE TABLE rescuers (
@@ -21,10 +15,13 @@ CREATE TABLE rescuedAnimals (
     aID INTEGER PRIMARY KEY,
     gender TEXT NOT NULL,
     aSpeciesID INTEGER,
-    aBreedID INTEGER,
+    breed TEXT,
     colorization TEXT NOT NULL,
     injury TEXT NOT NULL,
+    rescuerID INTEGER NOT NULL,
     isActive BOOLEAN NOT NULL,
+    FOREIGN KEY (rescuerID) REFERENCES rescuers(rID),
+    FOREIGN KEY (aSpeciesID) REFERENCES species(sID)
 );
 
 CREATE TABLE medias (
