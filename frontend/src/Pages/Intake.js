@@ -7,7 +7,7 @@ function Intake() {
         handleSubmit, 
         getValues, 
         formState: { errors }, 
-      } = useForm();
+    } = useForm();
 
     const onSubmit = useCallback(() => { 
         console.log(getValues()); 
@@ -16,64 +16,96 @@ function Intake() {
     return (
         <>
             <style>{`
+                /* Gradient background for the form */
                 body {
-                    background: linear-gradient(135deg, #8FBC8F, #2F4F4F);
-                    font-family: Arial, sans-serif;
-                    padding: 20px;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    height: 100vh;
-                    margin: 0;
+                   background: white;
+    font-family: Sora, sans-serif;
+    font-size : 22px;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 10px;
+    margin-bottom: 25px;
                 }
 
+                /* Make form responsive and larger */
                 form {
-                    background: white;
-                    padding: 20px;
-                    border-radius: 10px;
-                    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-                    width: 100%; 
-                    max-width: 400px; 
-                    box-sizing: border-box; 
+                   display: flex;
+    flex-direction: column;
+    background: white;
+    padding: 30px;
+    border-radius: 30px;
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
+    width: 1000px; /* Increase max-width for larger screens */
+    height: 900px;
+    box-sizing: border-box;
                 }
 
+                /* Styling for form title */
                 h2 {
                     text-align: center;
-                    color: #2F4F4F; 
-                    font-size: 24px;
+                    color: #2f4f4f;
+                    font-size: 30px;
                     margin-bottom: 20px;
                 }
 
-                input, select {
-                    width: 100%; 
-                    padding: 10px;
-                    margin: 10px 0;
+                /* Input and select field styling */
+                input,
+                select {
+                    width: 100%;
+                    padding: 15px;
+                    margin: 12px 0;
                     border-radius: 5px;
                     border: 1px solid #ccc;
                     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
-                    box-sizing: border-box; 
+                    box-sizing: border-box;
+                    font-size: 16px; /* Make input text bigger */
+                    margin-bottom: 25px;
                 }
 
+                /* Button styling with gradient */
                 button {
                     width: 100%;
-                    padding: 10px;
-                    background: linear-gradient(135deg, #8FBC8F, #2F4F4F);
+                    padding: 15px;
+                    background: linear-gradient(90deg, #8fbc8f, #2f4f4f);
                     border: none;
                     border-radius: 5px;
                     color: white;
-                    font-size: 16px;
+                    font-size: 18px;
                     cursor: pointer;
                     transition: background 0.3s ease;
                 }
 
                 button:hover {
-                    background: linear-gradient(135deg, #2F4F4F, #8FBC8F);
+                    background: linear-gradient(135deg, #2f4f4f, #8fbc8f);
                 }
 
+                /* Error message styling */
                 .error-message {
                     color: red;
                     font-size: 12px;
                     margin-top: -8px;
+                }
+
+                @media screen and (min-width: 1024px) {
+                    form {
+                        max-width: 800px; /* Even wider form on larger screens */
+                    }
+
+                    h2 {
+                        font-size: 32px;
+                    }
+
+                    input,
+                    select {
+                        font-size: 20px;
+                    }
+
+                    button {
+                        font-size: 22px;
+                    }
                 }
             `}</style>
 
@@ -166,4 +198,3 @@ function Intake() {
 }
 
 export default Intake;
-//hii
