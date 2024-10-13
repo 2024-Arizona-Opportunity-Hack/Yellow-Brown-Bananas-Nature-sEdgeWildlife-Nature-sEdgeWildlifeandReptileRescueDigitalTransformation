@@ -71,8 +71,8 @@ app.post('/adoption-response', async (req, res) => {
     }
 });
 
-//GET request to all adoptees
-app.get('/adoption-response', async (req, res) => {
+// GET request to /adoptees
+app.get('/adoptee', async (req, res) => {
     const adoptees = await databaseService.getAllAdoptees();
     res.json(adoptees)
 });
