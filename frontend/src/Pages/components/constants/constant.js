@@ -31,4 +31,9 @@
     url: "/#aboutme",
     onlyMobile: true,
   },
+  {
+    id: "6",
+    title: "Donation",
+    url: "https://givebutter.com/",
+  },
   ];
