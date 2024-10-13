@@ -58,6 +58,13 @@ app.get('/intake-response', async (req, res) => {
     res.json(intakeResponses);
 });
 
+// GET request to /intake-response/:id
+app.get('/intake-response/:id', async (req, res) => {
+    const { id } = req.params;
+    const intakeResponse = await databaseService.getRescuedAnimalsByID(id);
+    res.json(intakeResponse);
+});
+
 // POST request to /adoption-response
 app.post('/adoption-response', async (req, res) => {
     try {
