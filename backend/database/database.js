@@ -18,6 +18,25 @@ class Database {
             // migrationsPath: "./migrations",
         }); // Run the migration function to create the database tables
         console.log("Database service is running.");
+
+        // Insert initial species data if the table is empty
+        const speciesCount = await db.get('SELECT COUNT(*) as count FROM species');
+        if (speciesCount.count === 0) {
+            const initialSpecies = [
+                { sType: 'Snake' },
+                { sType: 'Lizard' },
+                { sType: 'Turtle' },
+                { sType: 'Tortoise' },
+                { sType: 'Owl' },
+                { sType: 'Bird' },
+                { sType: 'Crocodile' },
+                { sType: 'Alligator' }
+            ];
+            for (const species of initialSpecies) {
+                await db.run('INSERT INTO species (sType) VALUES (?)', [species.sType]);
+            }
+            console.log("Initial species data inserted.");
+        }
     }
 
     getDB() {

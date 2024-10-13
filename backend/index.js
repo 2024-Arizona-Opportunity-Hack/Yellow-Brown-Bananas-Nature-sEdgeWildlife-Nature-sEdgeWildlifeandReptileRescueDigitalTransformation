@@ -38,6 +38,12 @@ app.post('/register', async (req, res) => {
     }
 });
 
+// GET request to /species
+app.get('/species', async (req, res) => {
+    const species = await databaseService.getSpecies();
+    res.json(species);
+});
+
 // Set up function
 async function setup() {
     try {

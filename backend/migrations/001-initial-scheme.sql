@@ -39,7 +39,9 @@ CREATE TABLE adopters (
     aPhone TEXT NOT NULL,
     aAddress TEXT NOT NULL,
     aAge TEXT NOT NULL,
-    aJob TEXT NOT NULL
+    aJob TEXT NOT NULL,
+    speciesID INTEGER,
+    FOREIGN KEY (speciesID) REFERENCES species(sID)
 );
 
 CREATE TABLE adoptees (
