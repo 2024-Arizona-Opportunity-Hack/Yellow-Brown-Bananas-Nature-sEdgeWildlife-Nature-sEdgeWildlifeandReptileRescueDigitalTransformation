@@ -143,11 +143,11 @@ function IntakeForm() {
 
             <h2>Animal Intake Form</h2>
             
-            <br />
-            <h3>Animal Information</h3>
-            <br />
-            
             <form onSubmit={handleSubmit(onSubmit)}>
+                <br />
+                <h3>Animal Information</h3>
+                <br />
+
                 {/* Species (Mandatory) */}
                 <label htmlFor="species">Species</label>
                 <div>
