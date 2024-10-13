@@ -23,7 +23,8 @@ CREATE TABLE rescuedAnimals (
     aSpeciesID INTEGER,
     aBreedID INTEGER,
     colorization TEXT NOT NULL,
-    injury TEXT NOT NULL
+    injury TEXT NOT NULL,
+    isActive BOOLEAN NOT NULL,
 );
 
 CREATE TABLE medias (
@@ -49,7 +50,8 @@ CREATE TABLE adoptees (
     aName TEXT NOT NULL,
     aBreed TEXT NOT NULL, 
     aGender TEXT NOT NULL, 
-    aAge INTEGER 
+    aAge INTEGER,
+    isActive BOOLEAN NOT NULL,
 );
 
 -- User --------------------------------------------------------------------------------------------------------------
