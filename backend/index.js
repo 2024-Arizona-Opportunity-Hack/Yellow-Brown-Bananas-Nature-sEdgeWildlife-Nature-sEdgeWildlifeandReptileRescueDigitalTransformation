@@ -96,6 +96,12 @@ app.post('/adoption-response', async (req, res) => {
     }
 });
 
+// GET request to /adoptees
+app.get('/adoptee', async (req, res) => {
+    const adoptees = await databaseService.getAllAdoptees();
+    res.json(adoptees)
+});
+
 // GET request to /species
 app.get('/species', async (req, res) => {
     const species = await databaseService.getSpecies();
