@@ -20,6 +20,10 @@ class Database {
         }); // Run the migration function to create the database tables
         console.log("Database service is running.");
     }
+
+    getDB() {
+        return this.dbPromise;
+    }
 }
 
 module.exports = new Database();
