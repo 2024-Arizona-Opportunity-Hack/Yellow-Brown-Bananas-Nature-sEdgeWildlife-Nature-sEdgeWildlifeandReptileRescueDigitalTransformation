@@ -38,6 +38,39 @@ app.post('/register', async (req, res) => {
     }
 });
 
+// POST request to /intake-response
+app.post('/intake-response', async (req, res) => {
+    try {
+        const { breed, colorization, gender, injury, speciesID, rescuerName, rescuerPhone } = req.body;
+        const rescuerID = await databaseService.insertRescuer({ name: rescuerName, phone: rescuerPhone });
+        await databaseService.insertRescuedAnimal({ breed, gender, colorization, injury, speciesID, rescuerID });
+
+        res.json({ message: 'Intake response recorded successfully' });
+    } catch (error) {
+        console.error('Error processing intake response:', error);
+        res.status(500).json({ error: 'An error occurred while processing the intake response' });
+    }
+});
+
+// GET request to /intake-response
+app.get('/intake-response', async (req, res) => {
+    const intakeResponses = await databaseService.getIntakeResponses();
+    res.json(intakeResponses);
+});
+
+// POST request to /adoption-response
+app.post('/adoption-response', async (req, res) => {
+    try {
+        const { address, age, email, job, name, phone, speciesID } = req.body;
+        await databaseService.insertAdopter({ address, age, email, job, name, phone, speciesID });
+
+        res.json({ message: 'Adoption response recorded successfully' });
+    } catch (error) {
+        console.error('Error processing adoption response:', error);
+        res.status(500).json({ error: 'An error occurred while processing the adoption response' });
+    }
+});
+
 // GET request to /species
 app.get('/species', async (req, res) => {
     const species = await databaseService.getSpecies();

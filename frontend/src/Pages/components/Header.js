@@ -2,9 +2,8 @@ import { useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import { disablePageScroll, enablePageScroll } from 'scroll-lock';
 
-
-import logo from "../components/assets/image/NEWRR_Logo.png";
-import { navigation } from "./constants/constant.js";
+import logo from "./assets/image/NEWRR_Logo.png";
+import { navigation} from "./constants/constant.js";
 
 import Button from "./Button.js"
 import MenuSvg from "./assets/svg/MenuSvg.js"

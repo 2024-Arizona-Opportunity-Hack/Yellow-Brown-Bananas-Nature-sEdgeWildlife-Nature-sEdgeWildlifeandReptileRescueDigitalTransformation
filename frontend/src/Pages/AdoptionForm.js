@@ -1,25 +1,63 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import APIService from "../services/APIService";
 
 function AdoptionForm() {
     const {
         register,
         handleSubmit,
         getValues,
+        reset,
         formState: { errors },
     } = useForm();
 
-    // Step 1: Add state to track selected species
-    const [selectedSpecies, setSelectedSpecies] = useState("");
+    const [speciesList, setSpeciesList] = useState([]);
 
-    const onSubmit = useCallback(() => {
-        console.log(getValues());
+    // Fetch species from API
+    useEffect(() => {
+        const fetchSpecies = async () => {
+            try {
+                const species = await APIService.getSpecies();
+                setSpeciesList(species);
+            } catch (error) {
+                console.error('Failed to fetch species:', error);
+            }
+        };
+
+        fetchSpecies();
+    }, []);
+
+    // Handle form submission
+    const onSubmit = useCallback(async () => {
+        const data = getValues();
+    
+        // Map species from string to speciesID as an integer, or null if "No preference"
+        const speciesID = data.species === "" ? null : parseInt(data.species);
+    
+        // Create intakeResponseObj with mapped attributes
+        const adoptionResponseObj = {
+            address: data.address,
+            age: parseInt(data.age),
+            email: data.email,
+            job: data.job,
+            speciesID: speciesID,
+            name: data.name,
+            phone: data.phone
+        };
+    
+        console.log(adoptionResponseObj);
+
+        try {
+            // Add intakeResponseObj to the database via APIService
+            await APIService.addAdoptionResponse(adoptionResponseObj);
+
+            // If successful, reset the form to clear all fields
+            reset();  // Clear the form
+            console.log("Form submitted successfully and cleared.");
+        } catch (error) {
+            console.error("Error submitting the form:", error);
+        }
     }, [getValues]);
-
-    // Step 2: Handle species change
-    const handleSpeciesChange = (event) => {
-        setSelectedSpecies(event.target.value);
-    };
 
     return (
         <>
@@ -97,33 +135,16 @@ function AdoptionForm() {
                     <div>
                         <select
                             id="species"
-                            {...register("species", { required: "Species is required" })}
-                            onChange={handleSpeciesChange} // Step 3: Add change handler
+                            {...register("species")}
                         >
-                            <option value="">Select Species</option>
-                            <option value="snake">Snake</option>
-                            <option value="lizard">Lizard</option>
-                            <option value="turtle">Turtle</option>
-                            <option value="gecko">Tortoise</option>
-                            <option value="chameleon">Owl</option>
-                            <option value="iguana">Bird</option>
-                            <option value="crocodile">Crocodile</option>
-                            <option value="alligator">Alligator</option>
-                            <option value="other">Other</option>
+                            <option value="">Unsure</option> {/* "No preference" option with blank value */}
+                            {speciesList.map((species) => (
+                                <option key={species.sID} value={species.sID}>
+                                    {species.sType}
+                                </option>
+                            ))}
                         </select>
                     </div>
-                    <div className="error-message">{errors.species?.message}</div>
-
-                    {/* Step 4: Conditionally render the text box for "Other" */}
-                    {selectedSpecies === "other" && (
-                        <div>
-                            <input
-                                type="text"
-                                placeholder="Please Specify Species"
-                                {...register("otherSpecies")}
-                            />
-                        </div>
-                    )}
 
                     <button type="submit">Submit</button>
                 </form>
