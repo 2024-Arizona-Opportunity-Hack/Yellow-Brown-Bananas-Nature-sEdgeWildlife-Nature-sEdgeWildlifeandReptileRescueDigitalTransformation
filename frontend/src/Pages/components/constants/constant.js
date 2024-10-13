@@ -25,4 +25,10 @@
     url: "/login",
     onlyMobile: true,
   },
+  {
+    id: "5",
+    title: "Sign out",
+    url: "/#aboutme",
+    onlyMobile: true,
+  },
   ];
