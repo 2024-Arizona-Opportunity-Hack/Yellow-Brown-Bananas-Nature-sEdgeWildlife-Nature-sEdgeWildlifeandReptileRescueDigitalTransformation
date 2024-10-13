@@ -10,12 +10,15 @@
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
     "bootstrap": "^5.3.3",
+    "flowbite": "^2.5.2",
     "frontend": "file:",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.53.0",
+    "react-just-parallax": "^3.1.16",
     "react-router-dom": "^6.27.0",
     "react-scripts": "5.0.1",
+    "scroll-lock": "^2.1.5",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -41,5 +44,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.47",
+    "tailwindcss": "^3.4.13"
   }
 }
