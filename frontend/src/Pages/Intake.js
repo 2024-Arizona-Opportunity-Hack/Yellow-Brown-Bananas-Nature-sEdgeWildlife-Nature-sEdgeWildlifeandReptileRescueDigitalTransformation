@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { useForm } from "react-hook-form"; 
 
 function Intake() {
@@ -9,9 +9,15 @@ function Intake() {
         formState: { errors }, 
     } = useForm();
 
+    const [isOther, setIsOther] = useState(false); // State to manage "Other" selection
+
     const onSubmit = useCallback(() => { 
         console.log(getValues()); 
     }, [getValues]); 
+
+    const handleSpeciesChange = (event) => {
+        setIsOther(event.target.value === "other"); // Check if "Other" is selected
+    };
 
     return (
         <>
@@ -19,28 +25,28 @@ function Intake() {
                 /* Gradient background for the form */
                 body {
                    background: white;
-    font-family: Sora, sans-serif;
-    font-size : 22px;
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 10px;
-    margin-bottom: 25px;
+                   font-family: Sora, sans-serif;
+                   font-size: 22px;
+                   padding: 20px;
+                   display: flex;
+                   justify-content: center;
+                   align-items: center;
+                   height: 100vh;
+                   margin: 10px;
+                   margin-bottom: 25px;
                 }
 
                 /* Make form responsive and larger */
                 form {
                    display: flex;
-    flex-direction: column;
-    background: white;
-    padding: 30px;
-    border-radius: 30px;
-    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
-    width: 1000px; /* Increase max-width for larger screens */
-    height: 900px;
-    box-sizing: border-box;
+                   flex-direction: column;
+                   background: white;
+                   padding: 30px;
+                   border-radius: 30px;
+                   box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
+                   width: 1000px; /* Increase max-width for larger screens */
+                   height: 930px;
+                   box-sizing: border-box;
                 }
 
                 /* Styling for form title */
@@ -117,14 +123,15 @@ function Intake() {
                     <select
                         id="species"
                         {...register("species", { required: "Species is required" })}
+                        onChange={handleSpeciesChange} // Handle change event
                     >
                         <option value="">Select Species</option>
                         <option value="snake">Snake</option>
                         <option value="lizard">Lizard</option>
                         <option value="turtle">Turtle</option>
-                        <option value="gecko">Gecko</option>
-                        <option value="chameleon">Chameleon</option>
-                        <option value="iguana">Iguana</option>
+                        <option value="gecko">Tortoise</option>
+                        <option value="chameleon">Owl</option>
+                        <option value="iguana">Bird</option>
                         <option value="crocodile">Crocodile</option>
                         <option value="alligator">Alligator</option>
                         <option value="other">Other</option>
@@ -132,13 +139,24 @@ function Intake() {
                 </div>
                 <div className="error-message">{errors.species?.message}</div>
 
+                {/* If "Other" is selected, show the textbox */}
+                {isOther && (
+                    <div>
+                        <label htmlFor="otherSpecies">Please specify:</label>
+                        <input
+                            id="otherSpecies"
+                            type="text"
+                            {...register("otherSpecies")}
+                        />
+                    </div>
+                )}
+
                 {/* Breed */}
                 <label htmlFor="breed">Breed</label> 
                 <div> 
                     <input 
                         id="breed"
                         type="text"
-                        placeholder="Breed" 
                         {...register("breed")}
                     /> 
                 </div>
@@ -163,7 +181,6 @@ function Intake() {
                     <input
                         id="coloration"
                         type="text"
-                        placeholder="Coloration"
                         {...register("coloration")}
                     />
                 </div>
@@ -174,7 +191,6 @@ function Intake() {
                     <input
                         id="injury"
                         type="text"
-                        placeholder="Injury"
                         {...register("injury")}
                     />
                 </div>
