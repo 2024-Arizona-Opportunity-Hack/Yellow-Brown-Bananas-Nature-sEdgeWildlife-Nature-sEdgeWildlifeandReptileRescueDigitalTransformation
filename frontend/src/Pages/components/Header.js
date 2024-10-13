@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { disablePageScroll, enablePageScroll } from 'scroll-lock';
 
@@ -12,6 +12,7 @@ import AuthService from '../../services/AuthService.js';
 
 const Header = () => {
     const pathname = useLocation();
+    const navigate = useNavigate();
     const [openNavigation, setOpenNavigation] = useState(false);
     const [isAuthenticated, setIsAuthenticated] = useState(AuthService.isAuthenticated());
 
@@ -33,7 +34,8 @@ const Header = () => {
 
     const handleLogout = () => {
         AuthService.logout();
-        setIsAuthenticated(false);  // Update authentication state after logging out
+        setIsAuthenticated(false); 
+        navigate('/');
     };
 
     return (
