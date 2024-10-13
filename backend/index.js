@@ -52,6 +52,25 @@ app.post('/intake-response', async (req, res) => {
     }
 });
 
+// GET request to /intake-response
+app.get('/intake-response', async (req, res) => {
+    const intakeResponses = await databaseService.getIntakeResponses();
+    res.json(intakeResponses);
+});
+
+// POST request to /adoption-response
+app.post('/adoption-response', async (req, res) => {
+    try {
+        const { address, age, email, job, name, phone, speciesID } = req.body;
+        await databaseService.insertAdopter({ address, age, email, job, name, phone, speciesID });
+
+        res.json({ message: 'Adoption response recorded successfully' });
+    } catch (error) {
+        console.error('Error processing adoption response:', error);
+        res.status(500).json({ error: 'An error occurred while processing the adoption response' });
+    }
+});
+
 // GET request to /species
 app.get('/species', async (req, res) => {
     const species = await databaseService.getSpecies();

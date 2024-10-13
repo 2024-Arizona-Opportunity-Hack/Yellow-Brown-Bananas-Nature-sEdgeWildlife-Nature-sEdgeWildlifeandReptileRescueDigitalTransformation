@@ -49,7 +49,7 @@ function IntakeForm() {
 
         try {
             // Add intakeResponseObj to the database via APIService
-            await APIService.addIntake(intakeResponseObj);
+            await APIService.addIntakeResponse(intakeResponseObj);
 
             // If successful, reset the form to clear all fields
             reset();  // Clear the form
@@ -57,9 +57,7 @@ function IntakeForm() {
         } catch (error) {
             console.error("Error submitting the form:", error);
         }
-
-        // clear all answer
-    }, [getValues]);    
+    }, [getValues]);
 
     return (
         <>

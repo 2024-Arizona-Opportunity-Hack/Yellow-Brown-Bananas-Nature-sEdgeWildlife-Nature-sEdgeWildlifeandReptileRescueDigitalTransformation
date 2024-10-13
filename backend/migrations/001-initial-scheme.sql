@@ -39,7 +39,7 @@ CREATE TABLE adopters (
     phone TEXT NOT NULL,
     address TEXT NOT NULL,
     age TEXT NOT NULL,
-    ajob TEXT NOT NULL,
+    job TEXT NOT NULL,
     speciesID INTEGER, -- preferred species
     FOREIGN KEY (speciesID) REFERENCES species(sID)
 );

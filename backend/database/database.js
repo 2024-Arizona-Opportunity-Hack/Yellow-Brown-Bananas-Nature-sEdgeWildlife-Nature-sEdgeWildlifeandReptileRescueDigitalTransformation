@@ -45,11 +45,11 @@ class Database {
 
     // ADOPTER
     // Insert Adopter 
-    async insertAdopter({name, email, phone, address, age, ajob, speciesID}) {
+    async insertAdopter({name, email, phone, address, age, job, speciesID}) {
         const db = await this.dbPromise;
         const result = await db.run(
-            'INSERT INTO adopters (name, email, phone, address, age, ajob, speciesID) VALUES (?, ?, ?, ?, ?, ?, ?)', 
-            [name, email, phone, address, age, ajob, speciesID]
+            'INSERT INTO adopters (name, email, phone, address, age, job, speciesID) VALUES (?, ?, ?, ?, ?, ?, ?)', 
+            [name, email, phone, address, age, job, speciesID]
         );
         // return true if insertion is successful. Else return false. 
         return result.lastID || null;
@@ -159,6 +159,18 @@ class Database {
         const db = await this.dbPromise;
         const species = await db.all('SELECT * FROM species');
         return species;
+    }
+
+    async getIntakeResponses() {
+        const db = await this.dbPromise;
+        const query = `
+            SELECT ra.*, r.rName AS rescuerName, r.rPhoneNumber AS rescuerPhoneNumber
+            FROM rescuedAnimals ra
+            JOIN rescuers r ON ra.rescuerID = r.rID
+            WHERE ra.isActive = 1
+        `;
+        const rescuedAnimals = await db.all(query);
+        return rescuedAnimals;
     }
 }
 
