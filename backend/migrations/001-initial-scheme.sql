@@ -17,7 +17,7 @@ CREATE TABLE rescuers (
     rPhoneNumber INTEGER
 );
 
-CREATE TABLE animalInfos (
+CREATE TABLE rescuedAnimals (
     aID INTEGER PRIMARY KEY,
     gender TEXT NOT NULL,
     aSpeciesID INTEGER,
@@ -65,10 +65,10 @@ CREATE TABLE users (
 
 -- Down
 DROP TABLE species;
-DROP TABLE breed;
+DROP TABLE breeds;
 DROP TABLE rescuers;
-DROP TABLE animalInfo;
-DROP TABLE media;
+DROP TABLE rescuedAnimals;
+DROP TABLE medias;
 DROP TABLE adopter;
 DROP TABLE adoptee;
 DROP TABLE users;
