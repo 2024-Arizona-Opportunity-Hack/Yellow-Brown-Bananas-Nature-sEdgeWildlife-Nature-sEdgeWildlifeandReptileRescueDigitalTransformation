@@ -14,7 +14,7 @@ const getSpecies = async () => {
 };
 
 // Add intake record
-const addIntake = async (intakeResponseObj) => {
+const addIntakeResponse = async (intakeResponseObj) => {
     try {
         const response = await axios.post(`${API_URL}/intake-response`, intakeResponseObj, {
             headers: {
@@ -28,7 +28,33 @@ const addIntake = async (intakeResponseObj) => {
     }
 };
 
+const getIntakeResponse = async () => {
+    try {
+        const response = await axios.get(`${API_URL}/intake-response`);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching intake responses:', error);
+        throw error;
+    }
+};
+
+const addAdoptionResponse = async (adoptionResponseObj) => {
+    try {
+        const response = await axios.post(`${API_URL}/adoption-response`, adoptionResponseObj, {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error adding adoption:', error);
+        throw error;
+    }
+}
+
 export default {
     getSpecies,
-    addIntake,
+    addIntakeResponse,
+    getIntakeResponse,
+    addAdoptionResponse
 };
