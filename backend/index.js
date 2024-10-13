@@ -58,14 +58,32 @@ app.get('/intake-response', async (req, res) => {
     res.json(intakeResponses);
 });
 
-// GET request to /intake-response/:id
-app.get('/intake-response/:id', async (req, res) => {
-    const { id } = req.params;
-    const intakeResponse = await databaseService.getRescuedAnimalsByID(id);
-    res.json(intakeResponse);
+// GET request to /rescued-animals
+app.get('/rescued-animals', async (req, res) => {
+    const rescuedAnimals = await databaseService.getAllRescuedAnimals();
+    res.json(rescuedAnimals);
 });
 
-// POST request to /adoption-responsea
+// DELETE request to /rescued-animals/:id
+app.delete('/rescued-animals/:id', async (req, res) => {
+    const { id } = req.params;
+    const animal = await databaseService.getRescuedAnimalsByID(id);
+    if (!animal) {
+        res.status(404).json({ error: 'Rescued animal not found' });
+        return;
+    }
+
+    const isDeleted = await databaseService.deleteRescuedAnimal(id);
+    await databaseService.insertAdoptee(animal);
+
+    if (isDeleted) {
+        res.json({ message: 'Rescued animal deleted successfully' });
+    } else {
+        res.status(404).json({ error: 'Rescued animal not found' });
+    }
+});
+
+// POST request to /adoption-response
 app.post('/adoption-response', async (req, res) => {
     try {
         const { address, age, email, job, name, phone, speciesID } = req.body;
