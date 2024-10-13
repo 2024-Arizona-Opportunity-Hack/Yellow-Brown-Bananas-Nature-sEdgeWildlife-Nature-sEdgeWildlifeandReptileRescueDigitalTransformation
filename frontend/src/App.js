@@ -1,42 +1,50 @@
+import './App.css';
 import React from "react";
-import { Route, Switch, Redirect } from "react-router-dom";
-import Header from "./Components/Header";
+import { useEffect, useState } from 'react';
+import { Route, Routes, Navigate } from "react-router-dom";
 
-import Home from "./Pages/Home";
-import Products from "./Pages/Products";
-import Admin from "./Pages/Admin";
-import Login, { fakeAuth } from "./Components/Login";
+import IntakeForm from "./pages/IntakeForm.js";
+import Search from "./pages/Search.js";
+import LogIn from './pages/LogIn.js';
+import Register from './pages/Register.js';
+import AuthService from './services/AuthService.js';
+import LandingPage from './pages/LandingPage.js';
+import Navbar from './pages/components/Header.js';
 
-import "./styles.css";
+function PrivateRoute({ element }) {
+  const [isAuthenticated, setIsAuthenticated] = useState(null); // Start as null to indicate loading state
 
-export default function App() {
+  useEffect(() => {
+    // Check authentication status when the component mounts
+    const checkAuth = async () => {
+      const authStatus = AuthService.isAuthenticated();
+      setIsAuthenticated(authStatus);
+    };
+
+    checkAuth();
+  }, []);
+
+  // Render loading state while checking authentication
+  if (isAuthenticated === null) {
+    return <div>Loading...</div>;
+  }
+
+  // If authenticated, render the provided component; otherwise, redirect to login
+  return isAuthenticated ? element : <Navigate to="/login" />;
+}
+
+function App() {
   return (
     <>
-      <Header />
-      <Switch>
-        <Route path="/login" component={Login} />
-        <Route path="/" exact component={Home} />
-        <Route path="/products" component={Products} />
-        <PrivateRoute path="/admin" component={Admin} />
-      </Switch>
+      <Navbar/>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/search" element={<PrivateRoute element={<Search />} />} />
+        <Route path="/login" element={<LogIn />} />
+        <Route path="/register" element={<Register />} />
+      </Routes>
     </>
   );
 }
 
-const PrivateRoute = ({ component: Component, ...rest }) => {
-  return (
-    <Route
-      {...rest}
-      render={props =>
-        fakeAuth.isAuthenticated === true ? (
-          //https://reactjs.org/docs/jsx-in-depth.html#spread-attributes
-          <Component {...props} />
-        ) : (
-          <Redirect
-            to={{ pathname: "/login", state: { from: props.location } }}
-          />
-        )
-      }
-    />
-  );
-};
+export default App;

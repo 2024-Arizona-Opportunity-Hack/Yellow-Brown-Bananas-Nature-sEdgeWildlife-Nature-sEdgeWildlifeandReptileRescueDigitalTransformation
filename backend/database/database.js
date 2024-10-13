@@ -4,7 +4,6 @@ const sqlite = require("sqlite");
 const dbPath = "./database.sqlite";
 
 class Database {
-    
     constructor() {
         this.dbPromise = sqlite.open({
             filename: dbPath,
@@ -21,11 +20,15 @@ class Database {
         console.log("Database service is running.");
     }
 
+    getDB() {
+        return this.dbPromise;
+    }
+
     // Insert Adopter 
     async insertAdopter({aName, aEmail, aPhone, aAddress, aAge, aJob}) {
         const db = await this.dbPromise;
         const result = await db.run(
-            'INSERT INTO adopter (aName, aEmail, aPhone, aAddress, aAge, aJob) VALUES (?, ?, ?, ?, ?, ?)', 
+            'INSERT INTO adopters (aName, aEmail, aPhone, aAddress, aAge, aJob) VALUES (?, ?, ?, ?, ?, ?)', 
             [aName, aEmail, aPhone, aAddress, aAge, aJob]
         );
         // return true if insertion is successful. Else return false. 
@@ -35,7 +38,7 @@ class Database {
     // Get ALL Adopters
     async getAllAdopters() {
         const db = await this.dbPromise;
-        const adopters = await db.all('SELECT * FROM adopter');
+        const adopters = await db.all('SELECT * FROM adopters');
         return adopters;
     }
 
@@ -49,7 +52,7 @@ class Database {
     // Get Adoptee by ID
     async getAdopterByID(aID) {
         const db = await this.dbPromise;
-        const adopter = await db.get('SELECT * FROM adopter WHERE aID = ?', [aID]);
+        const adopter = await db.get('SELECT * FROM adopters WHERE aID = ?', [aID]);
         // return adopter object
         return adopter;
     }   
@@ -58,7 +61,7 @@ class Database {
     async insertAdoptee({aName, aBreed, aGender, aAge}) {
         const db = await this.dbPromise;
         const result = await db.run(
-            'INSERT INTO adopter (aName, aBreed, aGender, aAge) VALUES (?, ?, ?, ?)', 
+            'INSERT INTO adopters (aName, aBreed, aGender, aAge) VALUES (?, ?, ?, ?)', 
             [aName, aBreed, aGender, aAge]
         );
         // return true if insertion is successful. Else return false. 

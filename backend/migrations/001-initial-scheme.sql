@@ -33,10 +33,8 @@ CREATE TABLE medias (
     createdAt DATETIME DEFAULT CURRENT_TIMESTAMP  -- Timestamp of when the media was added
 );
 
--- INTAKE FORM -------------------------------------------------------------------------------------------------------
-
 -- ADOPTION FORM -----------------------------------------------------------------------------------------------------
-CREATE TABLE adopter (
+CREATE TABLE adopters (
     aID INTEGER PRIMARY KEY,
     aName TEXT NOT NULL,
     aEmail TEXT NOT NULL,
@@ -46,22 +44,19 @@ CREATE TABLE adopter (
     aJob TEXT NOT NULL,
 );
 
-CREATE TABLE adoptee (
+CREATE TABLE adoptees (
     anID INTEGER PRIMARY KEY, -- This ID will link to Species ID
     aName TEXT NOT NULL,
     aBreed TEXT NOT NULL, 
     aGender TEXT NOT NULL, 
     aAge INTEGER 
 );
--- ADOPTION FORM -----------------------------------------------------------------------------------------------------
-
 
 -- User --------------------------------------------------------------------------------------------------------------
 CREATE TABLE users (
     username VARCHAR(255) PRIMARY KEY,
     passwordHashed VARCHAR(255) NOT NULL
 );
--- User --------------------------------------------------------------------------------------------------------------
 
 -- Down
 DROP TABLE species;
@@ -72,5 +67,3 @@ DROP TABLE medias;
 DROP TABLE adopter;
 DROP TABLE adoptee;
 DROP TABLE users;
-
-
