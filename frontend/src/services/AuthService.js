@@ -51,7 +51,8 @@ class AuthService {
     }
     
     isAuthenticated() {
-        return localStorage.getItem('authenticated') === 'true';
+        // console.log(localStorage.getItem('authenticated'));
+        return localStorage.getItem('authenticated');
     }
 }
 
