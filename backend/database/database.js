@@ -4,7 +4,6 @@ const sqlite = require("sqlite");
 const dbPath = "./database.sqlite";
 
 class Database {
-    
     constructor() {
         this.dbPromise = sqlite.open({
             filename: dbPath,
@@ -23,6 +22,24 @@ class Database {
 
     getDB() {
         return this.dbPromise;
+    }
+
+    async insertAdopter(name, email, phone, address, age, job, ) {
+        const db = await this.dbPromise;
+        await db.run(
+            "INSERT INTO adopters (name, email, phone, address, age, job) VALUES (?, ?, ?, ?, ?, ?)",
+            [name, email, phone, address, age, job]
+        );
+    }
+
+    async getAdopterById(id) {
+        const db = await this.dbPromise;
+        return db.get("SELECT * FROM adopters WHERE id = ?", [id]);
+    }
+
+    async getAdopters() {
+        const db = await this.dbPromise;
+        return db.all("SELECT * FROM adopters");
     }
 }
 
