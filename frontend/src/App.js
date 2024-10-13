@@ -10,6 +10,7 @@ import Register from './pages/Register.js';
 import AuthService from './services/AuthService.js';
 import LandingPage from './pages/LandingPage.js';
 import Navbar from './pages/components/Header.js';
+import AdoptionForm from './pages/AdoptionForm.js';
 
 function PrivateRoute({ element }) {
   const [isAuthenticated, setIsAuthenticated] = useState(null); // Start as null to indicate loading state
@@ -36,12 +37,14 @@ function PrivateRoute({ element }) {
 function App() {
   return (
     <>
-      <Navbar/>
+      <Navbar />
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/search" element={<PrivateRoute element={<Search />} />} />
         <Route path="/login" element={<LogIn />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/intake-form" element={<IntakeForm />} />
+        <Route path="/adoption-form" element={<AdoptionForm />} />
       </Routes>
     </>
   );
