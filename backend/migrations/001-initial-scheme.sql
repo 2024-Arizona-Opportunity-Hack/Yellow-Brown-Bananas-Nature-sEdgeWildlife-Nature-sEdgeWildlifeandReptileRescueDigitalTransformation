@@ -39,7 +39,7 @@ CREATE TABLE adopters (
     aPhone TEXT NOT NULL,
     aAddress TEXT NOT NULL,
     aAge TEXT NOT NULL,
-    aJob TEXT NOT NULL,
+    aJob TEXT NOT NULL
 );
 
 CREATE TABLE adoptees (
@@ -48,7 +48,7 @@ CREATE TABLE adoptees (
     aBreed TEXT NOT NULL, 
     aGender TEXT NOT NULL, 
     aAge INTEGER,
-    isActive BOOLEAN NOT NULL,
+    isActive BOOLEAN NOT NULL
 );
 
 -- User --------------------------------------------------------------------------------------------------------------
