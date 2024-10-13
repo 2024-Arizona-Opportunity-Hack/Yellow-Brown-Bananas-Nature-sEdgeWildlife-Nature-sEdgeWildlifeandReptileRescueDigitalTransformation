@@ -1,4 +1,4 @@
-export const navigation = [
+  export const navigation = [
   {
     id: "0",
     title: "About me",
@@ -7,17 +7,17 @@ export const navigation = [
   {
     id: "1",
     title: "Adoption",
-    url: "/adoption-form",
+    url: "/adoption",
   },
   {
     id: "2",
     title: "Animal Rescue",
-    url: "/intake-form",
+    url: "/intake-rescue",
   },
   {
     id: "3",
-    title: "News",
-    url: "#news",
+    title: "Search",
+    url: "/search",
   },
   {
     id: "4",
@@ -25,4 +25,4 @@ export const navigation = [
     url: "/login",
     onlyMobile: true,
   },
-];
+  ];

@@ -61,11 +61,11 @@ const Hero = () => {
 
                 {/* Text Elements */}
                 <ScrollParallax isAbsolutelyPositioned>
-                  <ul className="absolute -left-[8.5rem] bottom-[7.5rem] px-5 py-2 bg-white/40 backdrop-blur border border-n-1/10 rounded-2xl xl:flex w-[20rem] text-gray-900">      
+                  <ul className="absolute -left-[8.5rem] bottom-[7.5rem] px-5 py-2 bg-white/40 backdrop-blur border border-n-1/10 rounded-2xl xl:flex w-[20rem] text-black font-bold">      
                     Nature’s Edge Wildlife and Reptile Rescue is a 501(c)(3) non-profit wildlife 
                     rehabilitation facility and reptile rescue. We are state and federally permitted wildlife rehabilitators.
                   </ul>
-                  <ul className="absolute -right-[8.5rem] bottom-[2rem] px-5 py-2 bg-white/40 backdrop-blur border border-n-1/10 rounded-2xl xl:flex w-[20rem] text-gray-900">      
+                  <ul className="absolute -right-[8.5rem] bottom-[2rem] px-5 py-2 bg-white/40 backdrop-blur border border-n-1/10 rounded-2xl xl:flex w-[20rem] text-black font-bold">      
                     We rehab all native reptiles, bats, birds of prey and mammals on a limited basis and will help with transport of other wildlife 
                     to permitted rehabilitators. We also conduct outreach education programs around DFW.
                   </ul>
