@@ -1,6 +1,6 @@
-import snake from "../components/assets/image/snake.png";
-import owl from "../components/assets/image/owl.png";
-import turtle from "../components/assets/image/turtle.png";
+import snake from "./assets/image/snake.png";
+import owl from "./assets/image/owl.png";
+import turtle from "./assets/image/turtle.png";
 import { useState, useEffect, useRef } from 'react';
 
 import Section from "./Section";
