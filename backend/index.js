@@ -58,6 +58,13 @@ app.get('/intake-response', async (req, res) => {
     res.json(intakeResponses);
 });
 
+// GET request to /intake-response/:id
+app.get('/intake-response/:id', async (req, res) => {
+    const { id } = req.params;
+    const animal = await databaseService.getRescuedAnimalsByID(id);
+    res.json(animal);
+});
+
 // GET request to /rescued-animals
 app.get('/rescued-animals', async (req, res) => {
     const rescuedAnimals = await databaseService.getAllRescuedAnimals();
