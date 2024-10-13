@@ -11,18 +11,17 @@ CREATE TABLE rescuers (
     rPhoneNumber INTEGER
 );
 
--- redo this table
 CREATE TABLE rescuedAnimals (
-    aID INTEGER PRIMARY KEY,
+    ID INTEGER PRIMARY KEY,
     gender TEXT NOT NULL,
-    aSpeciesID INTEGER,
+    speciesID INTEGER,
     breed TEXT,
     colorization TEXT NOT NULL,
     injury TEXT NOT NULL,
     rescuerID INTEGER NOT NULL,
     isActive BOOLEAN NOT NULL,
     FOREIGN KEY (rescuerID) REFERENCES rescuers(rID),
-    FOREIGN KEY (aSpeciesID) REFERENCES species(sID)
+    FOREIGN KEY (SpeciesID) REFERENCES species(sID)
 );
 
 CREATE TABLE medias (
@@ -34,24 +33,25 @@ CREATE TABLE medias (
 
 -- ADOPTION FORM -----------------------------------------------------------------------------------------------------
 CREATE TABLE adopters (
-    aID INTEGER PRIMARY KEY,
-    aName TEXT NOT NULL,
-    aEmail TEXT NOT NULL,
-    aPhone TEXT NOT NULL,
-    aAddress TEXT NOT NULL,
-    aAge TEXT NOT NULL,
-    aJob TEXT NOT NULL,
-    speciesID INTEGER,
+    ID INTEGER PRIMARY KEY,
+    name TEXT NOT NULL,
+    email TEXT NOT NULL,
+    phone TEXT NOT NULL,
+    address TEXT NOT NULL,
+    age TEXT NOT NULL,
+    ajob TEXT NOT NULL,
+    speciesID INTEGER, -- preferred species
     FOREIGN KEY (speciesID) REFERENCES species(sID)
 );
 
 CREATE TABLE adoptees (
-    aID INTEGER PRIMARY KEY,
-    aName TEXT NOT NULL,
-    aBreed TEXT NOT NULL, 
-    aGender TEXT NOT NULL, 
-    aAge INTEGER,
-    isActive BOOLEAN NOT NULL
+    ID INTEGER PRIMARY KEY,
+    speciesID INTEGER,
+    breed TEXT NOT NULL, 
+    gender TEXT NOT NULL, 
+    age INTEGER,
+    isActive BOOLEAN NOT NULL,
+    FOREIGN KEY (speciesID) REFERENCES species(sID)
 );
 
 -- User --------------------------------------------------------------------------------------------------------------

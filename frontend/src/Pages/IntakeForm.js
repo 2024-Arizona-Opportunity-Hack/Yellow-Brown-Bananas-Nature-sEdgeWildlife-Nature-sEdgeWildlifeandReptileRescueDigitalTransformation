@@ -7,6 +7,7 @@ function IntakeForm() {
         register,
         handleSubmit,
         getValues,
+        reset,
         formState: { errors },
     } = useForm();
 
@@ -27,7 +28,7 @@ function IntakeForm() {
     }, []);
 
     // Handle form submission
-    const onSubmit = useCallback(() => {
+    const onSubmit = useCallback(async () => {
         const data = getValues();
     
         // Map species from string to speciesID as an integer, or null if "No preference"
@@ -36,13 +37,28 @@ function IntakeForm() {
         // Create intakeResponseObj with mapped attributes
         const intakeResponseObj = {
             breed: data.breed,
-            coloration: data.coloration,
+            colorization: data.colorization,
             gender: data.gender,
             injury: data.injury,
-            speciesID: speciesID, // Replace species with speciesID
+            speciesID: speciesID,
+            rescuerName: data.rescuerName,
+            rescuerPhone: data.rescuerPhone
         };
     
         console.log(intakeResponseObj);
+
+        try {
+            // Add intakeResponseObj to the database via APIService
+            await APIService.addIntake(intakeResponseObj);
+
+            // If successful, reset the form to clear all fields
+            reset();  // Clear the form
+            console.log("Form submitted successfully and cleared.");
+        } catch (error) {
+            console.error("Error submitting the form:", error);
+        }
+
+        // clear all answer
     }, [getValues]);    
 
     return (
@@ -126,6 +142,11 @@ function IntakeForm() {
             `}</style>
 
             <h2>Animal Intake Form</h2>
+            
+            <br />
+            <h3>Animal Information</h3>
+            <br />
+            
             <form onSubmit={handleSubmit(onSubmit)}>
                 {/* Species (Mandatory) */}
                 <label htmlFor="species">Species</label>
@@ -134,7 +155,7 @@ function IntakeForm() {
                         id="species"
                         {...register("species")}
                     >
-                        <option value="">No preference</option> {/* "No preference" option with blank value */}
+                        <option value="">Unsure</option> {/* "No preference" option with blank value */}
                         {speciesList.map((species) => (
                             <option key={species.sID} value={species.sID}>
                                 {species.sType}
@@ -167,13 +188,13 @@ function IntakeForm() {
                     </select>
                 </div>
 
-                {/* Coloration */}
-                <label htmlFor="coloration">Coloration</label>
+                {/* colorization */}
+                <label htmlFor="colorization">Colorization</label>
                 <div>
                     <input
-                        id="coloration"
+                        id="colorization"
                         type="text"
-                        {...register("coloration")}
+                        {...register("colorization")}
                     />
                 </div>
 
@@ -186,6 +207,30 @@ function IntakeForm() {
                         {...register("injury")}
                     />
                 </div>
+
+                <br />
+                <h3>Rescuer Information</h3>
+                <br />
+            
+                {/* Rescuer Name */}
+                <label htmlFor="rescuerName">Rescuer Name</label>
+                <div>
+                    <input
+                        id="rescuerName"
+                        type="text"
+                        {...register("rescuerName")}
+                    />
+                </div>
+
+                {/* Rescuer Email */}
+                <label htmlFor="rescuerPhone">Rescuer Phone</label>
+                <div>
+                    <input
+                        id="rescuerPhone"
+                        type="phone"
+                        {...register("rescuerPhone")}
+                    />
+                </div>                
 
                 <button type="submit">Submit</button>
             </form>
