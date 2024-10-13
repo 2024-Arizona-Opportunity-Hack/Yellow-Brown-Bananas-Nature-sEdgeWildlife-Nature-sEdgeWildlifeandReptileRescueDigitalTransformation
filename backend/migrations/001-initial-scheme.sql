@@ -11,6 +11,7 @@ CREATE TABLE rescuers (
     rPhoneNumber INTEGER
 );
 
+-- redo this table
 CREATE TABLE rescuedAnimals (
     aID INTEGER PRIMARY KEY,
     gender TEXT NOT NULL,

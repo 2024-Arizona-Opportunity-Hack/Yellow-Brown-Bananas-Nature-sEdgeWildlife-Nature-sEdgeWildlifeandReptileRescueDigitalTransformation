@@ -1,5 +1,6 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import APIService from "../services/APIService";
 
 function IntakeForm() {
     const {
@@ -9,20 +10,44 @@ function IntakeForm() {
         formState: { errors },
     } = useForm();
 
-    const [isOther, setIsOther] = useState(false); // State to manage "Other" selection
+    const [speciesList, setSpeciesList] = useState([]);
 
+    // Fetch species from API
+    useEffect(() => {
+        const fetchSpecies = async () => {
+            try {
+                const species = await APIService.getSpecies();
+                setSpeciesList(species);
+            } catch (error) {
+                console.error('Failed to fetch species:', error);
+            }
+        };
+
+        fetchSpecies();
+    }, []);
+
+    // Handle form submission
     const onSubmit = useCallback(() => {
-        console.log(getValues());
-    }, [getValues]);
-
-    const handleSpeciesChange = (event) => {
-        setIsOther(event.target.value === "other"); // Check if "Other" is selected
-    };
+        const data = getValues();
+    
+        // Map species from string to speciesID as an integer, or null if "No preference"
+        const speciesID = data.species === "" ? null : parseInt(data.species);
+    
+        // Create intakeResponseObj with mapped attributes
+        const intakeResponseObj = {
+            breed: data.breed,
+            coloration: data.coloration,
+            gender: data.gender,
+            injury: data.injury,
+            speciesID: speciesID, // Replace species with speciesID
+        };
+    
+        console.log(intakeResponseObj);
+    }, [getValues]);    
 
     return (
         <>
             <style>{`
-                /* Gradient background for the form */
                 body {
                    background: white;
                    font-family: Sora, sans-serif;
@@ -35,7 +60,6 @@ function IntakeForm() {
                    margin: 10px;
                    margin-bottom: 25px;
                 }
-                /* Make form responsive and larger */
                 form {
                    display: flex;
                    flex-direction: column;
@@ -43,18 +67,16 @@ function IntakeForm() {
                    padding: 30px;
                    border-radius: 30px;
                    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
-                   width: 1000px; /* Increase max-width for larger screens */
+                   width: 1000px; 
                    height: 930px;
                    box-sizing: border-box;
                 }
-                /* Styling for form title */
                 h2 {
                     text-align: center;
                     color: #2f4f4f;
                     font-size: 30px;
                     margin-bottom: 20px;
                 }
-                /* Input and select field styling */
                 input,
                 select {
                     width: 100%;
@@ -64,10 +86,9 @@ function IntakeForm() {
                     border: 1px solid #ccc;
                     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
                     box-sizing: border-box;
-                    font-size: 16px; /* Make input text bigger */
+                    font-size: 16px;
                     margin-bottom: 25px;
                 }
-                /* Button styling with gradient */
                 button {
                     width: 100%;
                     padding: 15px;
@@ -82,7 +103,6 @@ function IntakeForm() {
                 button:hover {
                     background: linear-gradient(135deg, #2f4f4f, #8fbc8f);
                 }
-                /* Error message styling */
                 .error-message {
                     color: red;
                     font-size: 12px;
@@ -90,7 +110,7 @@ function IntakeForm() {
                 }
                 @media screen and (min-width: 1024px) {
                     form {
-                        max-width: 800px; /* Even wider form on larger screens */
+                        max-width: 800px; 
                     }
                     h2 {
                         font-size: 32px;
@@ -112,34 +132,16 @@ function IntakeForm() {
                 <div>
                     <select
                         id="species"
-                        {...register("species", { required: "Species is required" })}
-                        onChange={handleSpeciesChange} // Handle change event
+                        {...register("species")}
                     >
-                        <option value="">Select Species</option>
-                        <option value="snake">Snake</option>
-                        <option value="lizard">Lizard</option>
-                        <option value="turtle">Turtle</option>
-                        <option value="gecko">Tortoise</option>
-                        <option value="chameleon">Owl</option>
-                        <option value="iguana">Bird</option>
-                        <option value="crocodile">Crocodile</option>
-                        <option value="alligator">Alligator</option>
-                        <option value="other">Other</option>
+                        <option value="">No preference</option> {/* "No preference" option with blank value */}
+                        {speciesList.map((species) => (
+                            <option key={species.sID} value={species.sID}>
+                                {species.sType}
+                            </option>
+                        ))}
                     </select>
                 </div>
-                <div className="error-message">{errors.species?.message}</div>
-
-                {/* If "Other" is selected, show the textbox */}
-                {isOther && (
-                    <div>
-                        <label htmlFor="otherSpecies">Please specify:</label>
-                        <input
-                            id="otherSpecies"
-                            type="text"
-                            {...register("otherSpecies")}
-                        />
-                    </div>
-                )}
 
                 {/* Breed */}
                 <label htmlFor="breed">Breed</label>
@@ -184,18 +186,6 @@ function IntakeForm() {
                         {...register("injury")}
                     />
                 </div>
-
-                {/* Photos/Videos */}
-                {/* <label htmlFor="media">Photos/Videos</label>
-                <div>
-                    <input
-                        id="media"
-                        type="file"
-                        accept="image/*,video/*"
-                        multiple
-                        {...register("media")}
-                    />
-                </div> */}
 
                 <button type="submit">Submit</button>
             </form>
