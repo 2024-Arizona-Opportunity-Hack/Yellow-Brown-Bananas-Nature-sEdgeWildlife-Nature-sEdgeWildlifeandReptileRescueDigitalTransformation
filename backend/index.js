@@ -38,6 +38,20 @@ app.post('/register', async (req, res) => {
     }
 });
 
+// POST request to /intake-response
+app.post('/intake-response', async (req, res) => {
+    try {
+        const { breed, colorization, gender, injury, speciesID, rescuerName, rescuerPhone } = req.body;
+        const rescuerID = await databaseService.insertRescuer({ name: rescuerName, phone: rescuerPhone });
+        await databaseService.insertRescuedAnimal({ breed, gender, colorization, injury, speciesID, rescuerID });
+
+        res.json({ message: 'Intake response recorded successfully' });
+    } catch (error) {
+        console.error('Error processing intake response:', error);
+        res.status(500).json({ error: 'An error occurred while processing the intake response' });
+    }
+});
+
 // GET request to /species
 app.get('/species', async (req, res) => {
     const species = await databaseService.getSpecies();
