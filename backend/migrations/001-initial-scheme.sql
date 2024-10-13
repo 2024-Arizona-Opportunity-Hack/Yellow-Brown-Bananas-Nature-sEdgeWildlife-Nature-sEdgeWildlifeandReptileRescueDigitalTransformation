@@ -1,28 +1,23 @@
 -- Up
 -- INTAKE FORM -------------------------------------------------------------------------------------------------------
 CREATE TABLE species (
-    speciesID INTEGER PRIMARY KEY,
+    sID INTEGER PRIMARY KEY,
     sType TEXT NOT NULL  
 );
 
 CREATE TABLE breed (
-    breedID INTEGER PRIMARY KEY,
-    bType TEXT NOT NULL
+    bID INTEGER PRIMARY KEY,
+    bType TEXT NOT NULL,
+    speciesID INTEGER
 );
 
-CREATE TABLE gender (
-    gID INTEGER PRIMARY KEY,
-    gType TEXT NOT NULL
-);
-
-CREATE TABLE coloration (
-    cID INTEGER PRIMARY KEY,
-    cColor TEXT NOT NULL
-);
-
-CREATE TABLE injury (
-    iID INTEGER PRIMARY KEY,
-    iType TEXT NOT NULL
+CREATE TABLE animalInfo (
+    aID INTEGER PRIMARY KEY,
+    gender TEXT NOT NULL,
+    aSpeciesID INTEGER,
+    aBreedID INTEGER,
+    colorization TEXT NOT NULL,
+    injury TEXT NOT NULL
 );
 
 CREATE TABLE media (
@@ -35,66 +30,42 @@ CREATE TABLE media (
 -- INTAKE FORM -------------------------------------------------------------------------------------------------------
 
 -- ADOPTION FORM -----------------------------------------------------------------------------------------------------
-CREATE TABLE animal (
-    sAnimalID INTEGER PRIMARY KEY, -- This ID will link to Species ID
-    aName TEXT NOT NULL,  
-    breed TEXT NOT NULL, 
-    gender TEXT NOT NULL, 
-    age INTEGER 
-);
-
-CREATE TABLE email (
-    eID INTEGER PRIMARY KEY,
-    email TEXT NOT NULL  
-);
-
-CREATE TABLE phone (
-    pID INTEGER PRIMARY KEY,
-    phone TEXT NOT NULL  
-);
-
-CREATE TABLE address (
+CREATE TABLE adopter (
     aID INTEGER PRIMARY KEY,
-    aAddress TEXT NOT NULL  
+    aName TEXT NOT NULL,
+    aEmail TEXT NOT NULL,
+    aPhone TEXT NOT NULL,
+    aAddress TEXT NOT NULL,
+    aAGE TEXT NOT NULL,
+    aJob TEXT NOT NULL,
+    aPrevAdoptees TEXT NOT NULL
 );
 
-CREATE TABLE age (
-    ageID INTEGER PRIMARY KEY,
-    age TEXT NOT NULL  
-);
 
-CREATE TABLE job (
-    jID INTEGER PRIMARY KEY,
-    job TEXT NOT NULL  
-);
-
-CREATE TABLE prevAdoptions (
-    pID INTEGER PRIMARY KEY,
-    prevAdopt TEXT NOT NULL  
+CREATE TABLE animal (
+    anID INTEGER PRIMARY KEY, -- This ID will link to Species ID
+    aName TEXT NOT NULL,
+    aBreed TEXT NOT NULL, 
+    aGender TEXT NOT NULL, 
+    aAge INTEGER 
 );
 -- ADOPTION FORM -----------------------------------------------------------------------------------------------------
 
 
 -- User --------------------------------------------------------------------------------------------------------------
--- Thinh said he will do this section
+CREATE TABLE users (
+    username VARCHAR(255) PRIMARY KEY,
+    passwordHashed VARCHAR(255) NOT NULL
+);
 -- User --------------------------------------------------------------------------------------------------------------
-
 
 -- Down
 DROP TABLE species;
 DROP TABLE breed;
-DROP TABLE gender;
-DROP TABLE coloration;
-DROP TABLE injury;
+DROP TABLE animalInfo;
 DROP TABLE media;
+DROP TABLE adopter;
 DROP TABLE animal;
-DROP TABLE email;
-DROP TABLE phone;
-DROP TABLE address;
-DROP TABLE age;
-DROP TABLE job;
-DROP TABLE prevAdoptions;
-
-
+DROP TABLE users;
 
 
