@@ -2,7 +2,7 @@ export const navigation = [
     {
       id: "0",
       title: "About me",
-      url: "#aboutme",
+      url: "/#aboutme",
     },
     {
       id: "1",
